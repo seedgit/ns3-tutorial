@@ -22,6 +22,12 @@ static void CourseChangeV2 (std::string ext, std::string path, Ptr<const Mobilit
    Vector pos = mobility->GetPosition ();
    std::cout << "V2," << ext << ":" << Simulator::Now().GetSeconds () << ", x:" << pos.x << ", y=" << pos.y << std::endl;
 }
+static void PrintPosition(NodeContainer nodes) {
+    Ptr<MobilityModel> m = nodes.Get(0)->GetObject<MobilityModel> ();
+    Vector pos = m->GetPosition ();
+    std::cout << "node: 0" << "(" << pos.x << "," << pos.y << ")" << std::endl;
+    Simulator::Schedule(Seconds(1), &PrintPosition, nodes);
+}
 
 int main (int argc, char *argv[])
 {
@@ -42,8 +48,14 @@ int main (int argc, char *argv[])
 
   mobility.Install (nodes);
   
+  //Log mobility based on event
   Config::Connect ("/NodeList/*/$ns3::MobilityModel/CourseChange", MakeCallback (&CourseChangeV1));
+
+  //Log mobility on event with custom parameter
   Config::Connect ("/NodeList/*/$ns3::MobilityModel/CourseChange", MakeBoundCallback (&CourseChangeV2, "Hello"));
+
+  //Log by simulation time
+  Simulator::Schedule(Seconds(1), &PrintPosition, nodes);
   
   Simulator::Stop(Seconds(100));
   Simulator::Run ();
