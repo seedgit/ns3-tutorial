@@ -12,12 +12,13 @@
 #include "ns3/yans-wifi-helper.h"
 
 using namespace ns3;
-
+/*
 void ViewPosition(Ptr<Node> node) {
   std::cout << Simulator::Now().GetSeconds() << std::endl;
   Simulator::Schedule (Seconds (1.0), &ViewPosition);
 }
 
+*/
 int main (int argc, char *argv[])
 {
   NodeContainer nodes;
@@ -56,7 +57,7 @@ int main (int argc, char *argv[])
 
   mobility.Install (nodes);
 
-  Simulator::Schedule (Seconds (1.0), &ViewPosition, nodes.Get(0));
+  //Simulator::Schedule (Seconds (1.0), &ViewPosition, nodes.Get(0));
 
   Simulator::Stop(Seconds (100.0));
   Simulator::Run ();
