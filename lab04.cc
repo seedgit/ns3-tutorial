@@ -42,13 +42,10 @@ int main (int argc, char *argv[])
 
   mobility.Install (nodes);
   
-  //Simulator::Stop(Seconds (0.0));
-  std::ofstream os;
   Config::Connect ("/NodeList/*/$ns3::MobilityModel/CourseChange", MakeCallback (&CourseChangeV1));
   Config::Connect ("/NodeList/*/$ns3::MobilityModel/CourseChange", MakeBoundCallback (&CourseChangeV2, "Hello"));
   
-
-  Simulator::Stop(Seconds(10));
+  Simulator::Stop(Seconds(100));
   Simulator::Run ();
   Simulator::Destroy ();
 }
