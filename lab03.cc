@@ -23,26 +23,18 @@ int main (int argc, char *argv[])
 {
   NodeContainer nodes;
   nodes.Create (2);
-
-  MobilityHelper mobility;  
+  
+  MobilityHelper mobility; 
   /*
+   
+
   mobility.SetPositionAllocator("ns3::RandomRectanglePositionAllocator",
     "X", StringValue ("ns3::UniformRandomVariable[Min=0.0|Max=20.0]"),
     "Y", StringValue ("ns3::UniformRandomVariable[Min=0.0|Max=20.0]")
   );
-  */
- /*
-  mobility.SetPositionAllocator ("ns3::GridPositionAllocator",
-                                 "MinX", DoubleValue (0.0),
-                                 "MinY", DoubleValue (0.0),
-                                 "DeltaX", DoubleValue (10),
-                                 "DeltaY", DoubleValue (10),
-                                 "GridWidth", UintegerValue (5),//Number of node in row
-                                 "LayoutType", StringValue ("RowFirst"));
-  
-  
   mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
-  */
+  mobility.Install (nodes);
+
 
   ObjectFactory pos;
   pos.SetTypeId ("ns3::RandomRectanglePositionAllocator");
@@ -56,8 +48,19 @@ int main (int argc, char *argv[])
                                   "PositionAllocator", PointerValue (taPositionAlloc));
 
   mobility.Install (nodes);
+  */
 
-  //Simulator::Schedule (Seconds (1.0), &ViewPosition, nodes.Get(0));
+  mobility.SetPositionAllocator ("ns3::GridPositionAllocator",
+                                 "MinX", DoubleValue (0.0),
+                                 "MinY", DoubleValue (0.0),
+                                 "DeltaX", DoubleValue (10),
+                                 "DeltaY", DoubleValue (10),
+                                 "GridWidth", UintegerValue (5),//Number of node in row
+                                 "LayoutType", StringValue ("RowFirst"));
+  mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
+  
+  mobility.Install (nodes);
+
 
   Simulator::Stop(Seconds (100.0));
   Simulator::Run ();
