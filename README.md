@@ -10,7 +10,7 @@
 	* ns-allinone-3.29/ns-3.29/example
 	* ns-allinone-3.29/ns-3.29/scratch
 <figure>
-  <img src="img/fig01-vs-workspace.png" alt="alt text" title="my tooltip">
+  <img src="fig01-vs-workspace.png" alt="alt text" title="my tooltip">
   <figcaption>What it should look like in Visual Studio Code</figcaption>
 </figure>
 
