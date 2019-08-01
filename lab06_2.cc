@@ -51,9 +51,9 @@ void MyApp::StartApplication() {
     m_socket = Socket::CreateSocket (m_node, UdpSocketFactory::GetTypeId ());
     m_socket->Bind (local);
     m_socket->SetAllowBroadcast(true);
-    //m_socket->SetRecvCallback (MakeCallback(&MessengerV1::ReceivePacket,this));
+    m_socket->SetRecvCallback (MakeCallback(&MyApp::ReceivePacket,this));
 
-    m_event = Simulator::Schedule (Seconds(10), &MyApp::SendPacket, this, "Hello");
+    m_event = Simulator::Schedule (Seconds(0), &MyApp::SendPacket, this, "Hello");
 }
 void MyApp::StopApplication() {
     m_running = false;
@@ -62,6 +62,7 @@ void MyApp::StopApplication() {
     }
 }
 void MyApp::SendPacket(std::string payload) {
+    std::cout << "Send" << std::endl;
     std::ostringstream msg; 
     uint16_t packetSize = msg.str().length()+1;
     Ptr<Packet> packet = Create<Packet>((uint8_t*) msg.str().c_str(), packetSize);
@@ -69,6 +70,7 @@ void MyApp::SendPacket(std::string payload) {
 }
 void MyApp::ReceivePacket (Ptr<Socket> socket) {
     Ptr<Packet> packet = socket->Recv (std::numeric_limits<uint32_t>::max (), 0);
+    std::cout << "Receive" << std::endl;
 }
 class MyLab 
 {
