@@ -31,6 +31,10 @@ static void PrintPosition(NodeContainer nodes) {
 
 int main (int argc, char *argv[])
 {
+  srand(time(NULL));
+  RngSeedManager::SetSeed((rand() %1000));
+  RngSeedManager::SetRun((rand() %1000));
+   
   NodeContainer nodes;
   nodes.Create (10);
   
