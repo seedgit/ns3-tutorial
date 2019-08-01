@@ -62,15 +62,24 @@ void MyApp::StopApplication() {
     }
 }
 void MyApp::SendPacket(std::string payload) {
-    std::cout << "Send" << std::endl;
     std::ostringstream msg; 
+    msg << payload;
+
     uint16_t packetSize = msg.str().length()+1;
     Ptr<Packet> packet = Create<Packet>((uint8_t*) msg.str().c_str(), packetSize);
     m_socket->SendTo (packet, 0, InetSocketAddress (m_targetAddress, m_port));
+    std::cout << "Send: " << payload << std::endl;
+
+    //m_event = Simulator::Schedule (Seconds(1), &MyApp::SendPacket, this, "Hello");
 }
 void MyApp::ReceivePacket (Ptr<Socket> socket) {
     Ptr<Packet> packet = socket->Recv (std::numeric_limits<uint32_t>::max (), 0);
-    std::cout << "Receive" << std::endl;
+    uint8_t *buffer = new uint8_t[packet->GetSize()];
+
+    packet->CopyData(buffer, packet->GetSize ());
+    std::string content = std::string((char*)buffer);
+
+    std::cout << "Receive: " << content << std::endl;
 }
 class MyLab 
 {
